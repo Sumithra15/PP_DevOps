@@ -1,0 +1,35 @@
+{
+  "852f5354-3365-4dc6-918d-a14a99ee95c1": {
+    "connectionParameters": {
+      "sku": "Enterprise"
+    },
+    "connectionRef": {
+      "apiTier": "Standard",
+      "bypassConsent": true,
+      "displayName": "SharePoint",
+      "iconUri": "https://connectoricons-prod.azureedge.net/releases/v1.0.1568/1.0.1568.2757/sharepointonline/icon.png",
+      "id": "/providers/microsoft.powerapps/apis/shared_sharepointonline",
+      "parameterHints": {},
+      "parameterHintsV2": {}
+    },
+    "datasets": {
+      "https://honeywellprod.sharepoint.com/teams/SumiTestBOTUI/Idead_Mgt_Tool": {
+        "dataSources": {
+          "IdeaLikesandComments": {
+            "tableName": "4fa6a92c-2651-406b-bbd9-afd423b27084"
+          },
+          "IdeasRepository": {
+            "tableName": "8e7f3ae9-dd8b-4422-b1cb-a8a47121cdfd"
+          }
+        }
+      }
+    },
+    "dataSources": [
+      "IdeaLikesandComments",
+      "IdeasRepository"
+    ],
+    "dependencies": {},
+    "dependents": [],
+    "id": "852f5354-3365-4dc6-918d-a14a99ee95c1"
+  }
+}

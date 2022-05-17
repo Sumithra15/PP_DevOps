@@ -1,0 +1,859 @@
+"MyIdeasScreen As screen.'tabletLayout_HeaderAndGallery_ver3.0'":
+    BackgroundImage: =
+    Fill: =RGBA(116, 116, 116, 1)
+    Height: =Max(App.Height, App.DesignHeight)
+    ImagePosition: =ImagePosition.Tile
+    OnVisible: |-
+        =UpdateContext({LikeCount:0});
+    Width: =Max(App.Width, App.DesignWidth)
+
+    RectQuickActionBar1_7 As rectangle:
+        Fill: =RGBA(255, 255, 255, 1)
+        Height: =45
+        Width: =Parent.Width
+        ZIndex: =18
+
+    Title1_5 As label:
+        Align: =Left
+        Fill: =RGBA(34, 32, 32, 1)
+        FontWeight: =FontWeight.Bold
+        Height: =56
+        PaddingRight: =10
+        Size: =22
+        Text: ="  My Ideas"
+        Width: =Parent.Width
+        Y: =45
+        ZIndex: =20
+
+    Label12_12 As label:
+        Color: =RGBA(255, 255, 255, 1)
+        FontWeight: =FontWeight.Semibold
+        Height: =25
+        Size: =12
+        Text: ="Idea Title"
+        Width: =187
+        X: =123
+        Y: =102
+        ZIndex: =23
+
+    Label12_13 As label:
+        Color: =RGBA(255, 255, 255, 1)
+        FontWeight: =FontWeight.Semibold
+        Height: =25
+        Size: =12
+        Text: ="Idea Status"
+        Width: =121
+        X: =709
+        Y: =102
+        ZIndex: =24
+
+    Label12_14 As label:
+        Color: =RGBA(255, 255, 255, 1)
+        FontWeight: =FontWeight.Semibold
+        Height: =25
+        Size: =12
+        Text: ="Submitted Date"
+        Width: =132
+        X: =945
+        Y: =102
+        ZIndex: =25
+
+    Button7_13 As button:
+        Fill: =RGBA(34, 32, 32, 1)
+        HoverBorderColor: =ColorFade(Self.Color, 20%)
+        HoverFill: =Black
+        OnSelect: =Navigate(IdeasDashboardFormNew);Set(VotedUserGalleryVisible,false);Set(CloseIcon,false)
+        PressedColor: =Self.BorderColor
+        PressedFill: =Self.HoverColor
+        RadiusBottomLeft: =0
+        RadiusBottomRight: =0
+        RadiusTopLeft: =0
+        RadiusTopRight: =0
+        Text: ="Back to Dashboard"
+        Width: =198
+        X: =820
+        Y: =53
+        ZIndex: =26
+
+    Label12_20 As label:
+        Color: =RGBA(255, 255, 255, 1)
+        FontWeight: =FontWeight.Semibold
+        Height: =25
+        Size: =12
+        Text: ="Votes"
+        Width: =79
+        X: =1099
+        Y: =102
+        ZIndex: =27
+
+    Image2_6 As image:
+        Height: =45
+        Image: =Honeywell_Logo_RGB_Red
+        Width: =172
+        ZIndex: =28
+
+    Label7_3 As label:
+        Color: =RGBA(128, 128, 128, 1)
+        FontWeight: =FontWeight.Bold
+        Size: =15
+        Text: =" | Test Idea App"
+        Width: =464
+        X: =142
+        ZIndex: =29
+
+    "IdeaGalleryNew_4 As gallery.'BrowseLayout_Vertical_ThreeTextVariant_ver4.0'":
+        BorderColor: =RGBA(116, 116, 116, 1)
+        Fill: =RGBA(255, 255, 255, 1)
+        Height: =636
+        Items: =Sort(Filter(Repocol,Lower(User().Email)=Lower('Created By'.Email)),Created,Descending)
+        Layout: =Layout.Vertical
+        TemplatePadding: =0
+        TemplateSize: =70
+        Width: =1365
+        X: =1
+        Y: =132
+        ZIndex: =30
+
+        Separator6_1 As rectangle:
+            Height: =1
+            OnSelect: =Select(Parent)
+            Width: =Parent.TemplateWidth
+            Y: =Parent.TemplateHeight - 1
+            ZIndex: =5
+
+        Subtitle2_3 As label:
+            Align: =Left
+            FocusedBorderThickness: =1
+            FontWeight: =FontWeight.Semibold
+            Height: =70
+            HoverColor: =Blue
+            OnSelect: |-
+                =Select(Parent);Navigate(IdeasReviewForm_MyIdeas, ScreenTransition.Fade);UpdateContext({LikeCount:0});Set(VotedUserGalleryVisible,false);Set(CloseIcon,false)
+            Overflow: =Overflow.Scroll
+            PaddingBottom: =0
+            PaddingRight: =0
+            PaddingTop: =10
+            Size: =12
+            Text: =ThisItem.'Idea Title'
+            Tooltip: ="Click to view/comment Idea"
+            Underline: =true
+            VerticalAlign: =VerticalAlign.Top
+            Width: =570
+            X: =117
+            ZIndex: =7
+
+        Body2_3 As label:
+            Height: =35
+            OnSelect: =Select(Parent)
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Size: =12
+            Text: =ThisItem.Created
+            VerticalAlign: =VerticalAlign.Top
+            Width: =174
+            X: =926
+            Y: =22
+            ZIndex: =8
+
+        Label3_7 As label:
+            FontWeight: =FontWeight.Bold
+            Height: =48
+            OnSelect: =Set(VotedUserGalleryVisible,true);Set(CloseIcon,true)
+            Text: =ThisItem.NumberOfLikes
+            Tooltip: ="Click to see who all voted "
+            Width: =72
+            X: =1130
+            Y: =9
+            ZIndex: =9
+
+        Label9_2 As label:
+            Height: =38
+            OnSelect: =Select(Parent)
+            Overflow: =Overflow.Scroll
+            Size: =11
+            Text: =ThisItem.Status.Value
+            Width: =227
+            X: =704
+            Y: =19
+            ZIndex: =13
+
+        Star2_1 As star:
+            Fill: =RGBA(0, 0, 0, 1)
+            Height: =30
+            HoverFill: =Gray
+            OnSelect: =Set(VotedUserGalleryVisible,true);Set(CloseIcon,true)
+            Tooltip: ="Click to see who all voted "
+            Width: =30
+            X: =1100
+            Y: =19
+            ZIndex: =17
+
+        Icon1 As icon.Trash:
+            Color: =RGBA(128, 128, 128, 1)
+            Height: =39
+            HoverBorderColor: =RGBA(255, 0, 0, 1)
+            HoverColor: =RGBA(184, 0, 0, 1)
+            Icon: =Icon.Trash
+            OnSelect: =RemoveIf(IdeasRepository,IdeaGalleryNew_4.Selected.ID=ID);RemoveIf(IdeaLikesandComments,IdeaGalleryNew_4.Selected.ID=IdeaID);If(IsEmpty(Errors(Repocol, IdeaGalleryNew_4.Selected)),Back())
+            PressedColor: =DarkGray
+            Width: =52
+            X: =1298
+            Y: =11
+            ZIndex: =18
+
+        Label1_2 As label:
+            OnSelect: =Select(Parent)
+            Text: |-
+                =LookUp(MergedCollection,ThisItem.ID=IdeaID&&Lower(Author.Email) = Lower(User().Email)&&
+                            IdeaLike > 0,IdeaID)
+            Visible: =false
+            X: =432
+            Y: =19
+            ZIndex: =19
+
+        Label3_10 As label:
+            FontWeight: =FontWeight.Bold
+            Height: =50
+            OnSelect: =Set(VotedUserGalleryVisible,true);Set(CloseIcon,true)
+            Text: =ThisItem.ID
+            Tooltip: ="Click to see who all voted "
+            Width: =83
+            X: =12
+            ZIndex: =20
+
+        Icon8 As icon.Edit:
+            Height: =46
+            Icon: =Icon.Edit
+            OnSelect: |-
+                =UpdateContext({ShowEditForm:true})
+            Width: =56
+            X: =1231
+            Y: =13
+            ZIndex: =21
+
+    VotedUserGallery_1 As gallery.variableTemplateHeightGallery:
+        BorderColor: =RGBA(50, 86, 160, 1)
+        BorderThickness: =1
+        Fill: =RGBA(255, 255, 255, 1)
+        Height: =478
+        Items: =Filter(MergedCollection,IdeaGalleryNew_4.Selected.ID=IdeaID&&IdeaLike>0)
+        Layout: =Layout.Vertical
+        ShowNavigation: =true
+        TemplateSize: =33
+        Transition: =Transition.Pop
+        Visible: =If(VotedUserGalleryVisible=true,true,false)
+        Width: =357
+        X: =727
+        Y: =132
+        ZIndex: =31
+
+        Label11_1 As label:
+            Height: =23
+            OnSelect: =Select(Parent)
+            PaddingBottom: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Text: =ThisItem.'Created By'.DisplayName
+            Width: =286
+            X: =6
+            ZIndex: =1
+
+    Icon3_2 As icon.Cancel:
+        Color: =RGBA(0, 0, 0, 1)
+        Fill: =RGBA(255, 255, 255, 1)
+        Height: =30
+        HoverColor: =LightGray
+        Icon: =Icon.Cancel
+        OnSelect: =Set(VotedUserGalleryVisible,false);Set(CloseIcon,false)
+        Visible: =If(CloseIcon=true, true, false)
+        Width: =23
+        X: =1050
+        Y: =134
+        ZIndex: =32
+
+    Button7_2 As button:
+        Fill: =RGBA(34, 32, 32, 1)
+        HoverBorderColor: =ColorFade(Self.Color, 20%)
+        HoverFill: =Black
+        OnSelect: =Navigate(IdeaSubmitForm,ScreenTransition.None);Set(VotedUserGalleryVisible,false);Set(CloseIcon,false)
+        PressedColor: =Self.BorderColor
+        PressedFill: =Self.HoverColor
+        RadiusBottomLeft: =0
+        RadiusBottomRight: =0
+        RadiusTopLeft: =0
+        RadiusTopRight: =0
+        Text: ="New Idea"
+        Width: =120
+        X: =1174
+        Y: =53
+        ZIndex: =33
+
+    Button7_5 As button:
+        Fill: =RGBA(34, 32, 32, 1)
+        HoverBorderColor: =ColorFade(Self.Color, 20%)
+        HoverFill: =Black
+        OnSelect: =Navigate(Top20IdeasScreen);Set(VotedUserGalleryVisible,false);Set(CloseIcon,false)
+        PressedColor: =Self.BorderColor
+        PressedFill: =Self.HoverColor
+        RadiusBottomLeft: =0
+        RadiusBottomRight: =0
+        RadiusTopLeft: =0
+        RadiusTopRight: =0
+        Text: ="Top 20 Ideas"
+        Width: =145
+        X: =1027
+        Y: =53
+        ZIndex: =34
+
+    Button7_15 As button:
+        Fill: =RGBA(34, 32, 32, 1)
+        HoverBorderColor: =ColorFade(Self.Color, 20%)
+        HoverFill: =Black
+        OnSelect: =Navigate(ALLIdeasScreen);Set(VotedUserGalleryVisible,false);Set(CloseIcon,false)
+        PressedColor: =Self.BorderColor
+        PressedFill: =Self.HoverColor
+        RadiusBottomLeft: =0
+        RadiusBottomRight: =0
+        RadiusTopLeft: =0
+        RadiusTopRight: =0
+        Text: ="All Ideas"
+        Visible: =false
+        Width: =110
+        X: =909
+        Y: =53
+        ZIndex: =35
+
+    Icon2_3 As icon.Reload:
+        Color: =RGBA(255, 255, 255, 1)
+        Height: =40
+        Icon: =Icon.Reload
+        OnSelect: =Refresh(IdeasRepository);
+        Rotation: =90
+        Tooltip: ="Reload Latest Data"
+        Width: =42
+        X: =1306
+        Y: =55
+        ZIndex: =37
+
+    Label12_27 As label:
+        Color: =RGBA(255, 255, 255, 1)
+        FontWeight: =FontWeight.Semibold
+        Height: =25
+        Size: =12
+        Text: ="Idea ID"
+        Width: =79
+        Y: =102
+        ZIndex: =38
+
+    Form3 As form:
+        AcceptsFocus: =false
+        BorderThickness: =1
+        DataSource: =IdeasRepository
+        Fill: =RGBA(215, 223, 240, 1)
+        Height: =728
+        Item: =IdeaGalleryNew_4.Selected
+        NumberOfColumns: =1
+        Visible: =If(ShowEditForm=true, true, false)
+        Width: =1219
+        X: =1
+        Y: =40
+        ZIndex: =39
+
+        "'What Problem in the market are we trying to solve?_DataCard1' As typedDataCard.textualEditCard":
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="What_x0020_Problem_x0020_in_x002"
+            Default: =ThisItem.'What Problem in the market are we trying to solve?'
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="What Problem in the market are we trying to solve?"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            MaxLength: =DataSourceInfo([@IdeasRepository], DataSourceInfo.MaxLength, "What_x0020_Problem_x0020_in_x002")
+            Required: =true
+            Update: =DataCardValue24.Text
+            Width: =1219
+            X: =0
+            Y: =2
+            ZIndex: =1
+
+            DataCardKey26 As label:
+                AutoHeight: =true
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =(Parent.Width - 60) * 0.4
+                Wrap: =false
+                X: =30
+                Y: =10 + (DataCardValue24.Height / 2) - (Self.Height / 2)
+                ZIndex: =1
+
+            DataCardValue24 As text:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                Default: =Parent.Default
+                DelayOutput: =true
+                DisplayMode: =Parent.DisplayMode
+                MaxLength: =Parent.MaxLength
+                PaddingLeft: =5
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Tooltip: =Parent.DisplayName
+                Width: =(Parent.Width - 60) * 0.6
+                X: =DataCardKey26.X + DataCardKey26.Width
+                Y: =10
+                ZIndex: =2
+
+            ErrorMessage24 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue24.Y + DataCardValue24.Height
+                ZIndex: =3
+
+            StarVisible24 As label:
+                Align: =Align.Center
+                Height: =DataCardKey26.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey26.Y
+                ZIndex: =4
+
+        "'Describe the Solution!_DataCard1' As typedDataCard.textualEditCard":
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="Describe_x0020_the_x0020_Solutio"
+            Default: =ThisItem.'Describe the Solution!'
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="Describe the Solution!"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            MaxLength: =DataSourceInfo([@IdeasRepository], DataSourceInfo.MaxLength, "Describe_x0020_the_x0020_Solutio")
+            Required: =true
+            Update: =DataCardValue23.Text
+            Width: =1219
+            X: =0
+            Y: =3
+            ZIndex: =1
+
+            DataCardKey25 As label:
+                AutoHeight: =true
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =(Parent.Width - 60) * 0.4
+                Wrap: =false
+                X: =30
+                Y: =10 + (DataCardValue23.Height / 2) - (Self.Height / 2)
+                ZIndex: =1
+
+            DataCardValue23 As text:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                Default: =Parent.Default
+                DelayOutput: =true
+                DisplayMode: =Parent.DisplayMode
+                MaxLength: =Parent.MaxLength
+                PaddingLeft: =5
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Tooltip: =Parent.DisplayName
+                Width: =(Parent.Width - 60) * 0.6
+                X: =DataCardKey25.X + DataCardKey25.Width
+                Y: =10
+                ZIndex: =2
+
+            ErrorMessage23 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue23.Y + DataCardValue23.Height
+                ZIndex: =3
+
+            StarVisible23 As label:
+                Align: =Align.Center
+                Height: =DataCardKey25.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey25.Y
+                ZIndex: =4
+
+        "'Who would our target customers be?_DataCard1' As typedDataCard.textualEditCard":
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="Who_x0020_would_x0020_our_x0020_"
+            Default: =ThisItem.'Who would our target customers be?'
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="Who would our target customers be?"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            MaxLength: =DataSourceInfo([@IdeasRepository], DataSourceInfo.MaxLength, "Who_x0020_would_x0020_our_x0020_")
+            Required: =true
+            Update: =DataCardValue25.Text
+            Width: =1219
+            X: =0
+            Y: =4
+            ZIndex: =1
+
+            DataCardKey27 As label:
+                AutoHeight: =true
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =(Parent.Width - 60) * 0.4
+                Wrap: =false
+                X: =30
+                Y: =10 + (DataCardValue25.Height / 2) - (Self.Height / 2)
+                ZIndex: =1
+
+            DataCardValue25 As text:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                Default: =Parent.Default
+                DelayOutput: =true
+                DisplayMode: =Parent.DisplayMode
+                MaxLength: =Parent.MaxLength
+                PaddingLeft: =5
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Tooltip: =Parent.DisplayName
+                Width: =(Parent.Width - 60) * 0.6
+                X: =DataCardKey27.X + DataCardKey27.Width
+                Y: =10
+                ZIndex: =2
+
+            ErrorMessage25 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue25.Y + DataCardValue25.Height
+                ZIndex: =3
+
+            StarVisible25 As label:
+                Align: =Align.Center
+                Height: =DataCardKey27.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey27.Y
+                ZIndex: =4
+
+        "'Offering Category_DataCard1' As typedDataCard.comboBoxEditCard":
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="Offering_x0020_Category"
+            Default: =ThisItem.'Offering Category'
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="Offering Category"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            Required: =false
+            Update: =DataCardValue22.Selected
+            Width: =1219
+            X: =0
+            Y: =5
+            ZIndex: =1
+
+            DataCardKey24 As label:
+                AutoHeight: =true
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =(Parent.Width - 60) * 0.4
+                Wrap: =false
+                X: =30
+                Y: =10 + (DataCardValue22.Height / 2) - (Self.Height / 2)
+                ZIndex: =1
+
+            DataCardValue22 As combobox:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                DefaultSelectedItems: =Parent.Default
+                DisplayFields: =["Value"]
+                DisplayMode: =Parent.DisplayMode
+                Items: =Choices([@IdeasRepository].'Offering Category')
+                PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                SearchFields: =["Value"]
+                SearchItems: =Choices(IdeasRepository.'Offering Category',DataCardValue22.SearchText)
+                SelectMultiple: =false
+                Tooltip: =Parent.DisplayName
+                Width: =(Parent.Width - 60) * 0.6
+                X: =DataCardKey24.X + DataCardKey24.Width
+                Y: =10
+                ZIndex: =2
+
+            ErrorMessage22 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue22.Y + DataCardValue22.Height
+                ZIndex: =3
+
+            StarVisible22 As label:
+                Align: =Align.Center
+                Height: =DataCardKey24.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey24.Y
+                ZIndex: =4
+
+        Attachments_DataCard3 As typedDataCard.attachmentsEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="{Attachments}"
+            Default: =ThisItem.Attachments
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="Attachments"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =195
+            Required: =false
+            Update: =DataCardValue40.Attachments
+            Width: =1218
+            X: =0
+            Y: =6
+            ZIndex: =1
+
+            DataCardKey42 As label:
+                AutoHeight: =true
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =(Parent.Width - 60) * 0.4
+                Wrap: =false
+                X: =30
+                Y: =10 + (DataCardValue40.Height / 2) - (Self.Height / 2)
+                ZIndex: =1
+
+            DataCardValue40 As attachments:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                DisplayMode: =Parent.DisplayMode
+                Height: =140
+                IsInDataCard: =true
+                Items: =Parent.Default
+                PaddingBottom: =5
+                PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                PaddingRight: =5
+                PaddingTop: =5
+                Tooltip: =Parent.DisplayName
+                Width: =992
+                X: =206
+                Y: =10
+                ZIndex: =2
+
+            ErrorMessage39 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue40.Y + DataCardValue40.Height
+                ZIndex: =3
+
+            StarVisible39 As label:
+                Align: =Align.Center
+                Height: =DataCardKey42.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey42.Y
+                ZIndex: =4
+
+        "'Idea Title_DataCard1' As typedDataCard.textualEditCard":
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="IdeaTitle"
+            Default: =ThisItem.'Idea Title'
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="Idea Title"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =82
+            MaxLength: =DataSourceInfo([@IdeasRepository], DataSourceInfo.MaxLength, "IdeaTitle")
+            Required: =true
+            Update: =DataCardValue20.Text
+            Width: =1218
+            X: =0
+            Y: =0
+            ZIndex: =40
+
+            DataCardKey22 As label:
+                AutoHeight: =true
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =(Parent.Width - 60) * 0.4
+                Wrap: =false
+                X: =30
+                Y: =10 + (DataCardValue20.Height / 2) - (Self.Height / 2)
+                ZIndex: =1
+
+            DataCardValue20 As text:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                Default: =Parent.Default
+                DelayOutput: =true
+                DisplayMode: =Parent.DisplayMode
+                Height: =67
+                MaxLength: =Parent.MaxLength
+                PaddingLeft: =5
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Tooltip: =Parent.DisplayName
+                Width: =982
+                X: =206
+                Y: =10
+                ZIndex: =2
+
+            ErrorMessage20 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue20.Y + DataCardValue20.Height
+                ZIndex: =3
+
+            StarVisible20 As label:
+                Align: =Align.Center
+                Height: =DataCardKey22.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey22.Y
+                ZIndex: =4
+
+        SendEmail_DataCard3 As typedDataCard.textualEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="SendEmail"
+            Default: =ThisItem.SendEmail
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="SendEmail"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            MaxLength: =DataSourceInfo([@IdeasRepository], DataSourceInfo.MaxLength, "SendEmail")
+            Required: =false
+            Update: =DataCardValue31.Text
+            Visible: =false
+            Width: =1218
+            X: =0
+            Y: =1
+            ZIndex: =40
+
+            DataCardKey33 As label:
+                AutoHeight: =true
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =(Parent.Width - 60) * 0.4
+                Wrap: =false
+                X: =30
+                Y: =10 + (DataCardValue31.Height / 2) - (Self.Height / 2)
+                ZIndex: =1
+
+            DataCardValue31 As text:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                Default: ="No"
+                DelayOutput: =true
+                DisplayMode: =Parent.DisplayMode
+                MaxLength: =Parent.MaxLength
+                PaddingLeft: =5
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Tooltip: =Parent.DisplayName
+                Width: =(Parent.Width - 60) * 0.6
+                X: =DataCardKey33.X + DataCardKey33.Width
+                Y: =10
+                ZIndex: =2
+
+            ErrorMessage30 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue31.Y + DataCardValue31.Height
+                ZIndex: =3
+
+            StarVisible30 As label:
+                Align: =Align.Center
+                Height: =DataCardKey33.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey33.Y
+                ZIndex: =4
+
+    Button3 As button:
+        Height: =60
+        OnSelect: |-
+            =SubmitForm(Form3);ClearCollect(Repocol,IdeasRepository);UpdateContext({ShowEditForm:false})
+        Text: ="Submit"
+        Visible: =If(ShowEditForm=true, true, false)
+        Width: =182
+        X: =363
+        Y: =692
+        ZIndex: =40
+
+    Button3_1 As button:
+        Height: =60
+        OnSelect: |-
+            =UpdateContext({ShowEditForm:false})
+        Text: ="Cancel"
+        Visible: =If(ShowEditForm=true, true, false)
+        Width: =182
+        X: =606
+        Y: =692
+        ZIndex: =41
+

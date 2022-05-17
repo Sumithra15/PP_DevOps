@@ -1,0 +1,356 @@
+IdeasReviewForm_1 As screen:
+    BackgroundImage: =
+    Height: =Max(App.Height, App.DesignHeight)
+    LoadingSpinner: =LoadingSpinner.Data
+    OnHidden: =Reset(IdeaReviewGallery_6);Reset(IdeasCommentsGallery_6);
+    OnVisible: |-
+        =UpdateContext({LikeCount:0});Reset(UserFeedback_5);Reset(IdeaReviewGallery_6);Reset(IdeasCommentsGallery_6)
+    Width: =Max(App.Width, App.DesignWidth)
+
+    "IdeaReviewGallery_6 As gallery.'BrowseLayout_Vertical_ThreeTextVariant_ver4.0'":
+        BorderColor: =RGBA(241, 244, 249, 1)
+        BorderStyle: =BorderStyle.None
+        Fill: =RGBA(241, 244, 249, 1)
+        Height: =191
+        Items: =If(!IsBlank(ItemID),Filter(IdeasRepository, ID = Value(ItemID)),Filter(IdeasRepository,IdeaGalleryNew.Selected.ID=ID))
+        Layout: =Layout.Vertical
+        TemplatePadding: =0
+        TemplateSize: =191
+        Width: =1364
+        Y: =96
+        ZIndex: =1
+
+        Title7_6 As label:
+            Color: =RGBA(0, 13, 75, 1)
+            Height: =46
+            OnSelect: =Select(Parent)
+            Overflow: =Overflow.Scroll
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =10
+            PaddingTop: =0
+            Size: =14
+            Text: =ThisItem.'Idea Title'
+            VerticalAlign: =VerticalAlign.Top
+            Width: =730
+            X: =9
+            Y: =11
+            ZIndex: =1
+
+        Subtitle4_6 As label:
+            Align: =Align.Justify
+            Height: =133
+            LineHeight: =1.5
+            OnSelect: =Select(Parent)
+            Overflow: =Overflow.Scroll
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =10
+            PaddingTop: =0
+            Size: =13
+            Text: =ThisItem.'Describe the Solution!'
+            VerticalAlign: =VerticalAlign.Top
+            Width: =1355
+            X: =4
+            Y: =57
+            ZIndex: =2
+
+        Separator4_6 As rectangle:
+            Height: =1
+            OnSelect: =Select(Parent)
+            Width: =Parent.TemplateWidth
+            Y: =Parent.TemplateHeight - 1
+            ZIndex: =5
+
+        Icon4_5 As icon.Attachment:
+            Height: =34
+            Icon: =Icon.PaperClip
+            OnSelect: =Launch(First(ThisItem.Attachments).AbsoluteUri)
+            Visible: =If(ThisItem.'Has attachments', true, false)
+            Width: =34
+            X: =1165
+            Y: =17
+            ZIndex: =13
+
+    "IdeasCommentsGallery_6 As gallery.'BrowseLayout_Vertical_ThreeTextVariant_ver4.0'":
+        BorderColor: =RGBA(219, 219, 219, 1)
+        Fill: =RGBA(234, 242, 246, 0.81)
+        Height: =478
+        Items: =Filter(MergedCollection,IdeaReviewGallery_6.Selected.ID=IdeaID,!(IsBlank(IdeaComment)))
+        Layout: =Layout.Vertical
+        TemplatePadding: =0
+        TemplateSize: =116
+        Width: =695
+        Y: =290
+        ZIndex: =1
+
+        Title8_6 As label:
+            Height: =20
+            OnSelect: =Select(Parent)
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Size: =9
+            Text: =ThisItem.'Created By'.DisplayName
+            VerticalAlign: =VerticalAlign.Top
+            Width: =387
+            X: =141
+            Y: =95
+            ZIndex: =1
+
+        Subtitle5_6 As label:
+            Height: =20
+            OnSelect: =Select(Parent)
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Size: =9
+            Text: =ThisItem.Created
+            VerticalAlign: =VerticalAlign.Top
+            Width: =144
+            X: =10
+            Y: =95
+            ZIndex: =2
+
+        Body4_6 As label:
+            Align: =Justify
+            Height: =72
+            OnSelect: =Select(Parent)
+            Overflow: =Overflow.Scroll
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =10
+            PaddingTop: =0
+            Size: =13
+            Text: =ThisItem.IdeaComment
+            VerticalAlign: =VerticalAlign.Top
+            Width: =667
+            X: =10
+            Y: =11
+            ZIndex: =3
+
+        Separator7_6 As rectangle:
+            Height: =1
+            OnSelect: =Select(Parent)
+            Width: =Parent.TemplateWidth
+            Y: =Parent.TemplateHeight - 1
+            ZIndex: =5
+
+    SubmitFeedback_5 As button:
+        Fill: =RGBA(50, 86, 160, 1)
+        Height: =71
+        OnSelect: |-
+            =If(IsEmpty(Filter(IdeaLikesandComments,IdeaReviewGallery_6.Selected.ID=IdeaID ,StartsWith('Created By'.Email,User().Email) ,IdeaLike>0)),Set(DBRCurrentVotes,LookUp(IdeasRepository,ID=IdeaReviewGallery_6.Selected.ID,NumberOfLikes));Patch(IdeasRepository,{ID:IdeaReviewGallery_6.Selected.ID, NumberOfLikes:DBRCurrentVotes+LikeCount,SendEmail:"no"});Patch(IdeaLikesandComments,{IdeaID:IdeaReviewGallery_6.Selected.ID,IdeaComment:UserFeedback_5.Text,IdeaLike:LikeCount}),Patch(IdeaLikesandComments,{IdeaID:IdeaReviewGallery_6.Selected.ID,IdeaComment:UserFeedback_5.Text}));Navigate(IdeasDashboardFormNew,ScreenTransition.None);Reset(UserFeedback_5);UpdateContext({LikeCount:0});
+            Concurrent(
+             ClearCollect(col1, Filter(IdeaLikesandComments, IdeaID >= 1 && IdeaID <= 40)),
+             ClearCollect(col2, Filter(IdeaLikesandComments, IdeaID >= 41 && IdeaID <= 80)),
+             ClearCollect(col3, Filter(IdeaLikesandComments, IdeaID >= 81 && IdeaID <= 120)),
+             ClearCollect(col4, Filter(IdeaLikesandComments, IdeaID >= 121 && IdeaID <= 160)),
+             ClearCollect(col5, Filter(IdeaLikesandComments, IdeaID >= 161 && IdeaID <= 200)),
+             ClearCollect(col6, Filter(IdeaLikesandComments, IdeaID >= 201 && IdeaID <= 240)),
+             ClearCollect(col7, Filter(IdeaLikesandComments, IdeaID >=241 && IdeaID <= 280)),
+             ClearCollect(col8, Filter(IdeaLikesandComments, IdeaID >= 281 && IdeaID <= 320)),
+             ClearCollect(col9, Filter(IdeaLikesandComments, IdeaID >= 321 && IdeaID <= 360)),
+             ClearCollect(col10, Filter(IdeaLikesandComments, IdeaID >= 361 && IdeaID <= 400)),
+             ClearCollect(col11, Filter(IdeaLikesandComments, IdeaID >= 401 && IdeaID <= 440)), 
+             ClearCollect(col12, Filter(IdeaLikesandComments, IdeaID >= 441 && IdeaID <= 480)),
+            ClearCollect(col13, Filter(IdeaLikesandComments, IdeaID >= 481 && IdeaID <= 520)),
+            ClearCollect(col14, Filter(IdeaLikesandComments, IdeaID >= 521 && IdeaID <= 560)),
+            ClearCollect(col15, Filter(IdeaLikesandComments, IdeaID >= 561 && IdeaID <= 600)),
+            ClearCollect(col16, Filter(IdeaLikesandComments, IdeaID >= 601 && IdeaID <= 640)),
+            ClearCollect(col17, Filter(IdeaLikesandComments, IdeaID >= 641 && IdeaID <= 680)),
+            ClearCollect(col18, Filter(IdeaLikesandComments, IdeaID >= 681 && IdeaID <= 720)),
+            ClearCollect(col19, Filter(IdeaLikesandComments, IdeaID >= 721 && IdeaID <= 760)),
+            ClearCollect(col20, Filter(IdeaLikesandComments, IdeaID >= 761 && IdeaID <= 800)),
+            ClearCollect(col21, Filter(IdeaLikesandComments, IdeaID >= 801 && IdeaID <= 840)),
+            ClearCollect(col22, Filter(IdeaLikesandComments, IdeaID >= 841 && IdeaID <= 880)),
+            ClearCollect(col23, Filter(IdeaLikesandComments, IdeaID >= 881 && IdeaID <= 920))
+            );
+            ClearCollect(MergedCollection, col1, col2, col3, col4,col5,col6,col7,col8,col9,col10,col11,col12,col13,col14,col15,col16,col17,col18,col19,col20,col21,col22,col23);
+        RadiusBottomLeft: =0
+        RadiusBottomRight: =0
+        RadiusTopLeft: =0
+        RadiusTopRight: =0
+        Text: ="Submit Vote/Feedback"
+        Visible: =If(LikeCount=0&&((Len(UserFeedback_5.Text)=0)||(IsBlank(Trim(UserFeedback_5.Text)))),false,true)
+        Width: =280
+        X: =970
+        Y: =539
+        ZIndex: =2
+
+    UserFeedback_5 As text:
+        BorderColor: =RGBA(219, 219, 219, 1)
+        BorderStyle: =BorderStyle.None
+        Clear: =true
+        Default: =""
+        EnableSpellCheck: =true
+        Fill: =RGBA(218, 236, 243, 0.42)
+        Height: =219
+        HintText: ="Enter your feedback/Suggestion"
+        HoverFill: =
+        Mode: =TextMode.MultiLine
+        OnSelect: =
+        PressedFill: =
+        Width: =666
+        X: =700
+        Y: =290
+        ZIndex: =7
+
+    RectQuickActionBar1_15 As rectangle:
+        Fill: =RGBA(255, 255, 255, 1)
+        Height: =45
+        Width: =Parent.Width
+        ZIndex: =16
+
+    Title1_16 As label:
+        Align: =Left
+        Fill: =RGBA(34, 32, 32, 1)
+        FontWeight: =FontWeight.Bold
+        Height: =56
+        PaddingRight: =10
+        Size: =22
+        Text: ="Review/Feedback Idea"
+        Width: =Parent.Width
+        Y: =45
+        ZIndex: =17
+
+    Image2_14 As image:
+        Height: =45
+        Image: =Honeywell_Logo_RGB_Red
+        Width: =172
+        ZIndex: =21
+
+    Label7_13 As label:
+        Color: =RGBA(128, 128, 128, 1)
+        FontWeight: =FontWeight.Bold
+        Height: =45
+        Size: =15
+        Text: =" | Test Idea App"
+        Width: =445
+        X: =142
+        ZIndex: =22
+
+    Button7_85 As button:
+        BorderColor: =RGBA(136, 160, 209, 1)
+        Color: =RGBA(50, 86, 160, 1)
+        Fill: =RGBA(255, 255, 255, 1)
+        Height: =60
+        HoverBorderColor: =RGBA(0, 16, 96, 1)
+        HoverColor: =RGBA(0, 16, 96, 1)
+        HoverFill: =RGBA(255, 255, 255, 1)
+        OnSelect: |-
+            =If(IsEmpty(Filter(MergedCollection,IdeaReviewGallery_6.Selected.ID=IdeaID,Lower(Author.Email)=Lower(User().Email),IdeaLike>0)),If(LikeCount=0,UpdateContext({LikeCount:LikeCount+1}),Notify("You have already selected Vote option, please submit")),Notify("You have already Voted for this Idea, you can still submit your Comment/Feedback for this Idea",NotificationType.Warning))
+        PressedColor: =White
+        PressedFill: =Self.BorderColor
+        RadiusBottomLeft: =0
+        RadiusBottomRight: =0
+        RadiusTopLeft: =0
+        RadiusTopRight: =0
+        Size: =20
+        Text: ="Vote"
+        Visible: |
+            =(IsBlank(Label1_5.Text)&&(IdeaReviewGallery_6.Selected.Status.Value="New"||IdeaReviewGallery_6.Selected.Status.Value="In Review"||IdeaReviewGallery_6.Selected.Status.Value="Reviewed Working Solution"))
+                
+               
+            
+               
+        Width: =104
+        X: =725
+        Y: =539
+        ZIndex: =23
+
+    Button7_83 As button:
+        Fill: =RGBA(34, 32, 32, 1)
+        HoverBorderColor: =ColorFade(Self.Color, 20%)
+        HoverFill: =Black
+        OnSelect: =Navigate(IdeaSubmitForm,ScreenTransition.None);Set(VotedUserGalleryVisible,false);Set(CloseIcon,false);Reset(IdeaReviewGallery_6);Reset(IdeasCommentsGallery_6)
+        PressedColor: =Self.BorderColor
+        PressedFill: =Self.HoverColor
+        RadiusBottomLeft: =0
+        RadiusBottomRight: =0
+        RadiusTopLeft: =0
+        RadiusTopRight: =0
+        Text: ="New Idea"
+        Width: =110
+        X: =1245
+        Y: =54
+        ZIndex: =24
+
+    Button7_82 As button:
+        Fill: =RGBA(34, 32, 32, 1)
+        HoverBorderColor: =ColorFade(Self.Color, 20%)
+        HoverFill: =Black
+        OnSelect: =Navigate(Top20IdeasScreen);Set(VotedUserGalleryVisible,false);Set(CloseIcon,false);Reset(IdeaReviewGallery_6);Reset(IdeasCommentsGallery_6)
+        PressedColor: =Self.BorderColor
+        PressedFill: =Self.HoverColor
+        RadiusBottomLeft: =0
+        RadiusBottomRight: =0
+        RadiusTopLeft: =0
+        RadiusTopRight: =0
+        Text: ="Top 20 Ideas"
+        Width: =135
+        X: =1095
+        Y: =53
+        ZIndex: =25
+
+    Button7_81 As button:
+        Fill: =RGBA(34, 32, 32, 1)
+        HoverBorderColor: =ColorFade(Self.Color, 20%)
+        HoverFill: =Black
+        OnSelect: =Navigate(MyIdeasScreen);Set(VotedUserGalleryVisible,false);Set(CloseIcon,false);Reset(IdeaReviewGallery_6);Reset(IdeasCommentsGallery_6)
+        PressedColor: =Self.BorderColor
+        PressedFill: =Self.HoverColor
+        RadiusBottomLeft: =0
+        RadiusBottomRight: =0
+        RadiusTopLeft: =0
+        RadiusTopRight: =0
+        Text: ="My Ideas"
+        Width: =110
+        X: =978
+        Y: =53
+        ZIndex: =26
+
+    Button7_80 As button:
+        Fill: =RGBA(34, 32, 32, 1)
+        HoverBorderColor: =ColorFade(Self.Color, 20%)
+        HoverFill: =Black
+        OnSelect: =Navigate(ALLIdeasScreen);Set(VotedUserGalleryVisible,false);Set(CloseIcon,false);Reset(IdeaReviewGallery_6);Reset(IdeasCommentsGallery_6)
+        PressedColor: =Self.BorderColor
+        PressedFill: =Self.HoverColor
+        RadiusBottomLeft: =0
+        RadiusBottomRight: =0
+        RadiusTopLeft: =0
+        RadiusTopRight: =0
+        Text: ="All Ideas"
+        Width: =105
+        X: =865
+        Y: =53
+        ZIndex: =27
+
+    Button7_78 As button:
+        Fill: =RGBA(34, 32, 32, 1)
+        HoverBorderColor: =ColorFade(Self.Color, 20%)
+        HoverFill: =Black
+        OnSelect: =Set(VotedUserGalleryVisible,false);Set(CloseIcon,false);Reset(IdeaReviewGallery_6);Reset(IdeasCommentsGallery_6);Navigate(IdeasDashboardFormNew)
+        PressedColor: =Self.BorderColor
+        PressedFill: =Self.HoverColor
+        RadiusBottomLeft: =0
+        RadiusBottomRight: =0
+        RadiusTopLeft: =0
+        RadiusTopRight: =0
+        Text: ="Back to Dashboard"
+        Width: =198
+        X: =662
+        Y: =53
+        ZIndex: =28
+
+    Label1_5 As label:
+        OnSelect: =
+        Text: =LookUp(MergedCollection,IdeaReviewGallery_6.Selected.ID=IdeaID&&Lower(Author.Email) = Lower(User().Email)&&IdeaLike > 0,IdeaID)
+        Visible: =false
+        X: =725
+        Y: =714
+        ZIndex: =30
+

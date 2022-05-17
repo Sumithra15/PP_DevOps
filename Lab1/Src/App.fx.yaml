@@ -1,0 +1,40 @@
+App As appinfo:
+    BackEnabled: =false
+    OnStart: |
+        =Set(VotedUserGalleryVisible,false);Set(CloseIcon,false);
+        Set(ItemID,Param("ID"));
+        If(
+           !IsBlank(ItemID),
+           Navigate(IdeasReviewForm_1, ScreenTransition.None));
+        Set(screenID,Param("screenID"));
+        If(
+           !IsBlank(screenID),
+           Navigate(IdeasDashboard_Admin, ScreenTransition.None));
+        Concurrent(
+         ClearCollect(Repocol,IdeasRepository_HBT_HR),
+         ClearCollect(col1, Filter(IdeaLikesandComments, IdeaID >= 1 && IdeaID <= 40)),
+         ClearCollect(col2, Filter(IdeaLikesandComments, IdeaID >= 41 && IdeaID <= 80)),
+         ClearCollect(col3, Filter(IdeaLikesandComments, IdeaID >= 81 && IdeaID <= 120)),
+         ClearCollect(col4, Filter(IdeaLikesandComments, IdeaID >= 121 && IdeaID <= 160)),
+         ClearCollect(col5, Filter(IdeaLikesandComments, IdeaID >= 161 && IdeaID <= 200)),
+         ClearCollect(col6, Filter(IdeaLikesandComments, IdeaID >= 201 && IdeaID <= 240)),
+         ClearCollect(col7, Filter(IdeaLikesandComments, IdeaID >=241 && IdeaID <= 280)),
+         ClearCollect(col8, Filter(IdeaLikesandComments, IdeaID >= 281 && IdeaID <= 320)),
+         ClearCollect(col9, Filter(IdeaLikesandComments, IdeaID >= 321 && IdeaID <= 360)),
+         ClearCollect(col10, Filter(IdeaLikesandComments, IdeaID >= 361 && IdeaID <= 400)),
+         ClearCollect(col11, Filter(IdeaLikesandComments, IdeaID >= 401 && IdeaID <= 440)), 
+         ClearCollect(col12, Filter(IdeaLikesandComments, IdeaID >= 441 && IdeaID <= 480)),
+        ClearCollect(col13, Filter(IdeaLikesandComments, IdeaID >= 481 && IdeaID <= 520)),
+        ClearCollect(col14, Filter(IdeaLikesandComments, IdeaID >= 521 && IdeaID <= 560)),
+        ClearCollect(col15, Filter(IdeaLikesandComments, IdeaID >= 561 && IdeaID <= 600)),
+        ClearCollect(col16, Filter(IdeaLikesandComments, IdeaID >= 601 && IdeaID <= 640)),
+        ClearCollect(col17, Filter(IdeaLikesandComments, IdeaID >= 641 && IdeaID <= 680)),
+        ClearCollect(col18, Filter(IdeaLikesandComments, IdeaID >= 681 && IdeaID <= 720)),
+        ClearCollect(col19, Filter(IdeaLikesandComments, IdeaID >= 721 && IdeaID <= 760)),
+        ClearCollect(col20, Filter(IdeaLikesandComments, IdeaID >= 761 && IdeaID <= 800)),
+        ClearCollect(col21, Filter(IdeaLikesandComments, IdeaID >= 801 && IdeaID <= 840)),
+        ClearCollect(col22, Filter(IdeaLikesandComments, IdeaID >= 841 && IdeaID <= 880)),
+        ClearCollect(col23, Filter(IdeaLikesandComments, IdeaID >= 881 && IdeaID <= 920))
+        );
+        ClearCollect(MergedCollection, col1, col2, col3, col4,col5,col6,col7,col8,col9,col10,col11,col12,col13,col14,col15,col16,col17,col18,col19,col20,col21,col22,col23);
+
