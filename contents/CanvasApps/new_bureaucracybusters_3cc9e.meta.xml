@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CanvasApp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Name>new_bureaucracybusters_3cc9e</Name>
+  <AppVersion>2022-04-27T07:21:54Z</AppVersion>
+  <Status>Ready</Status>
+  <CreatedByClientVersion>3.22042.8.0</CreatedByClientVersion>
+  <MinClientVersion>3.22042.8.0</MinClientVersion>
+  <Tags>{"primaryDeviceWidth":"1366","primaryDeviceHeight":"768","sienaVersion":"20220427T072154Z-3.22042.8.0","deviceCapabilities":"","supportsPortrait":"false","supportsLandscape":"true","primaryFormFactor":"Tablet","publisherVersion":"3.22042.8","minimumRequiredApiVersion":"2.2.0","hasComponent":"false","hasUnlockedComponent":"false","isUnifiedRootApp":"false"}</Tags>
+  <IsCdsUpgraded>0</IsCdsUpgraded>
+  <GalleryItemId xsi:nil="true"></GalleryItemId>
+  <BackgroundColor>rgba(44, 125, 154, 1)</BackgroundColor>
+  <DisplayName>BureaucracyBusters</DisplayName>
+  <Description xsi:nil="true"></Description>
+  <CommitMessage xsi:nil="true"></CommitMessage>
+  <Publisher xsi:nil="true"></Publisher>
+  <AuthorizationReferences>[]</AuthorizationReferences>
+  <ConnectionReferences>{"fed93d3f-c080-4144-bf15-0210d61f71d2":{"id":"/providers/microsoft.powerapps/apis/shared_sharepointonline","displayName":"SharePoint","iconUri":"https://connectoricons-prod.azureedge.net/releases/v1.0.1568/1.0.1568.2757/sharepointonline/icon.png","dataSources":["IdeasRepository"],"dependencies":[],"dependents":[],"parameterHints":{},"parameterHintsV2":{},"isOnPremiseConnection":false,"bypassConsent":true,"dataSets":{"https://honeywellprod.sharepoint.com/teams/SumiTestBOTUI":{"dataSources":{"IdeasRepository":{"tableName":"f4768511-6131-46a5-84a7-04cc17d43241"}}}},"apiTier":"Standard","actions":["providers/PowerPlatform.Governance/Operations/Read","providers/PowerPlatform.Governance/Operations/Write"]},"08093096-c4da-48c7-a511-f193854644e8":{"id":"/providers/microsoft.powerapps/apis/shared_sharepointonline","displayName":"SharePoint","iconUri":"https://connectoricons-prod.azureedge.net/releases/v1.0.1568/1.0.1568.2757/sharepointonline/icon.png","dataSources":["IdeaLikesandComments"],"dependencies":[],"dependents":[],"parameterHints":{},"parameterHintsV2":{},"isOnPremiseConnection":false,"bypassConsent":true,"dataSets":{"https://honeywellprod.sharepoint.com/teams/SumiTestBOTUI":{"dataSources":{"IdeaLikesandComments":{"tableName":"1866c8c6-6130-4a5d-a3d5-5d9c54117464"}}}},"apiTier":"Standard","actions":["providers/PowerPlatform.Governance/Operations/Read","providers/PowerPlatform.Governance/Operations/Write"]},"17de7901-cd00-4ad9-965c-73547259db83":{"id":"/providers/microsoft.powerapps/apis/shared_sharepointonline","displayName":"SharePoint","iconUri":"https://connectoricons-prod.azureedge.net/releases/v1.0.1568/1.0.1568.2757/sharepointonline/icon.png","dataSources":["AdminComments"],"dependencies":[],"dependents":[],"parameterHints":{},"parameterHintsV2":{},"isOnPremiseConnection":false,"bypassConsent":true,"dataSets":{"https://honeywellprod.sharepoint.com/teams/SumiTestBOTUI":{"dataSources":{"AdminComments":{"tableName":"6d4a10f3-32be-44ed-a338-ba4300a65269"}}}},"apiTier":"Standard","actions":["providers/PowerPlatform.Governance/Operations/Read","providers/PowerPlatform.Governance/Operations/Write"]},"17a7ab4c-f58f-4db6-b9cc-999aa088e9e6":{"id":"/providers/microsoft.powerapps/apis/shared_office365","displayName":"Office 365 Outlook","iconUri":"https://connectoricons-prod.azureedge.net/releases/v1.0.1570/1.0.1570.2764/office365/icon.png","dataSources":["Office365Outlook"],"dependencies":[],"dependents":[],"parameterHints":{},"parameterHintsV2":{},"isOnPremiseConnection":false,"bypassConsent":true,"dataSets":{},"apiTier":"Standard"},"03e71a32-bb35-461a-b232-e581b63e1924":{"id":"/providers/microsoft.powerapps/apis/shared_office365users","displayName":"Office 365 Users","iconUri":"https://connectoricons-prod.azureedge.net/releases/v1.0.1563/1.0.1563.2732/office365users/icon.png","dataSources":["Office365Users"],"dependencies":[],"dependents":[],"parameterHints":{},"parameterHintsV2":{},"isOnPremiseConnection":false,"bypassConsent":true,"dataSets":{},"apiTier":"Standard","actions":["UserPhoto","MyProfileV2"]}}</ConnectionReferences>
+  <DatabaseReferences>{}</DatabaseReferences>
+  <AppComponents>[]</AppComponents>
+  <AppComponentDependencies>[]</AppComponentDependencies>
+  <CanConsumeAppPass>1</CanConsumeAppPass>
+  <CanvasAppType>0</CanvasAppType>
+  <BypassConsent>1</BypassConsent>
+  <AdminControlBypassConsent>0</AdminControlBypassConsent>
+  <EmbeddedApp xsi:nil="true"></EmbeddedApp>
+  <IntroducedVersion>1.0</IntroducedVersion>
+  <CdsDependencies>{"cdsdependencies":[]}</CdsDependencies>
+  <IsCustomizable>1</IsCustomizable>
+  <BackgroundImageUri>/CanvasApps/new_bureaucracybusters_3cc9e_BackgroundImageUri</BackgroundImageUri>
+  <DocumentUri>/CanvasApps/new_bureaucracybusters_3cc9e_DocumentUri.msapp</DocumentUri>
+</CanvasApp>

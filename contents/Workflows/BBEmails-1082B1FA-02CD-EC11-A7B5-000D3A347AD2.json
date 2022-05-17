@@ -1,0 +1,246 @@
+{
+  "properties": {
+    "connectionReferences": {
+      "shared_office365": {
+        "runtimeSource": "embedded",
+        "connection": {},
+        "api": {
+          "name": "shared_office365"
+        }
+      },
+      "shared_sharepointonline_1": {
+        "runtimeSource": "embedded",
+        "connection": {},
+        "api": {
+          "name": "shared_sharepointonline"
+        }
+      },
+      "shared_sharepointonline": {
+        "runtimeSource": "embedded",
+        "connection": {},
+        "api": {
+          "name": "shared_sharepointonline"
+        }
+      }
+    },
+    "definition": {
+      "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+      "contentVersion": "1.0.0.0",
+      "parameters": {
+        "$connections": {
+          "defaultValue": {},
+          "type": "Object"
+        },
+        "$authentication": {
+          "defaultValue": {},
+          "type": "SecureObject"
+        },
+        "sharepoint.site": {
+          "defaultValue": "",
+          "type": "String"
+        },
+        "sharepoint.list": {
+          "defaultValue": "",
+          "type": "String"
+        }
+      },
+      "triggers": {
+        "When_a_new_item_is_created": {
+          "recurrence": {
+            "frequency": "Minute",
+            "interval": 5
+          },
+          "splitOn": "@triggerBody()?.value",
+          "metadata": {
+            "flowSystemMetadata": {
+              "swaggerOperationId": "GetOnNewItems"
+            },
+            "operationMetadataId": "0c5dab0a-050e-44ef-98f8-666fe118d468"
+          },
+          "type": "ApiConnection",
+          "inputs": {
+            "host": {
+              "connection": {
+                "name": "@parameters('$connections')['shared_sharepointonline']['connectionId']"
+              }
+            },
+            "method": "get",
+            "path": "/datasets/@{encodeURIComponent(encodeURIComponent('https://honeywellprod.sharepoint.com/teams/SumiTestBOTUI'))}/tables/@{encodeURIComponent(encodeURIComponent('f4768511-6131-46a5-84a7-04cc17d43241'))}/onnewitems",
+            "authentication": "@parameters('$authentication')"
+          },
+          "conditions": []
+        }
+      },
+      "actions": {
+        "Send_an_email_(V2)_2": {
+          "runAfter": {},
+          "metadata": {
+            "flowSystemMetadata": {
+              "swaggerOperationId": "SendEmailV2"
+            },
+            "operationMetadataId": "9d57843e-25d0-4753-84a1-dfed95cb45eb"
+          },
+          "type": "ApiConnection",
+          "inputs": {
+            "host": {
+              "connection": {
+                "name": "@parameters('$connections')['shared_office365']['connectionId']"
+              }
+            },
+            "method": "post",
+            "body": {
+              "To": "@triggerBody()?['Author']?['Email']",
+              "Subject": "Action Required: Promote your idea with your network.",
+              "Body": "<p><span style=\"font-family: arial\"><strong>IT BUREAUCRACY BUSTERS | IDEA SUBMITTED </strong></span><span style=\"font-family: arial\">&nbsp;<br>\n<br>\nHello </span><span style=\"font-family: arial\"><strong></strong></span><span style=\"font-family: arial\"><strong>@{triggerBody()?['Author']?['DisplayName']}</strong></span><span style=\"font-family: arial\"><strong>,</strong></span><span style=\"font-family: arial\"> &nbsp;<br>\n<br>\nYour Bureaucracy Busters’ idea </span><span style=\"font-family: arial\"><strong></strong></span><span style=\"font-family: arial\"><strong>@{triggerBody()?['IdeaTitle']}</strong></span><span style=\"font-family: arial\"><strong></strong></span><span style=\"font-family: arial\"> has been successfully logged in the tool.<br>\n<br>\n</span><span style=\"font-family: arial\"><strong>ACTION</strong></span><span style=\"font-family: arial\"><br>\nEach week we will review the ideas that have been submitted to take forward for further review. &nbsp;One criteria will be how many people thought that idea was impactful - idea(s) with the highest number of votes will move to the next round of &nbsp;review.<br>\n• &nbsp;Share your idea across your networks (TAM, Staff, Yammer, Teams, etc) and ask them to vote.<br>\n• &nbsp;Encourage your network to </span><a href=\"https://apps.powerapps.com/play/4dfc38c3-46ea-4282-9657-22a4c15d0d8c?ID=@{triggerBody()?['ID']}\"><span style=\"font-family: arial\">vote</span></a><span style=\"font-family: arial\"> </span><span style=\"font-family: arial\"></span><span style=\"font-family: arial\"> for your idea.<br>\n<br>\n</span><span style=\"font-family: arial\"><strong>HAVE QUESTIONS?</strong></span><span style=\"font-family: arial\"><br>\nVisit our </span><a href=\"https://web.yammer.com/main/groups/eyJfdHlwZSI6Ikdyb3VwIiwiaWQiOiI1NjAzMzk2In0/new\"><span style=\"font-family: arial\">Yammer Group</span></a><span style=\"font-family: arial\"><br>\n<br>\nThank You<br>\n<br>\nIT Leadership Team<br>\n</span></p>",
+              "From": "BureaucracyBusters@HoneywellProd.onmicrosoft.com",
+              "Importance": "Normal"
+            },
+            "path": "/v2/Mail",
+            "authentication": "@parameters('$authentication')"
+          }
+        },
+        "Send_an_HTTP_request_to_SharePoint": {
+          "runAfter": {
+            "Send_an_email_(V2)_2": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "370cbf9e-d652-42c9-9065-43641f37f84a",
+            "flowSystemMetadata": {
+              "swaggerOperationId": "HttpRequest"
+            }
+          },
+          "type": "ApiConnection",
+          "inputs": {
+            "host": {
+              "connection": {
+                "name": "@parameters('$connections')['shared_sharepointonline_1']['connectionId']"
+              }
+            },
+            "method": "post",
+            "body": {
+              "method": "GET",
+              "uri": "/_vti_bin/ListData.svc/UserInformationList?$select=SBG,SBU&$filter=WorkEmail eq '@{triggerBody()?['Author']?['Email']}'",
+              "headers": {
+                "accept": "application/json;odata=nometadata"
+              }
+            },
+            "path": "/datasets/@{encodeURIComponent(encodeURIComponent('https://honeywellprod.sharepoint.com/teams/SumiTestBOTUI'))}/httprequest",
+            "authentication": "@parameters('$authentication')"
+          }
+        },
+        "Parse_JSON": {
+          "runAfter": {
+            "Send_an_HTTP_request_to_SharePoint": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "b87a5997-68e7-4948-935b-ed6345df4432"
+          },
+          "type": "ParseJson",
+          "inputs": {
+            "content": "@body('Send_an_HTTP_request_to_SharePoint')",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "d": {
+                  "type": "object",
+                  "properties": {
+                    "results": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "__metadata": {
+                            "type": "object",
+                            "properties": {
+                              "uri": {
+                                "type": "string"
+                              },
+                              "etag": {
+                                "type": "string"
+                              },
+                              "type": {
+                                "type": "string"
+                              }
+                            }
+                          },
+                          "SBG": {
+                            "type": "string"
+                          },
+                          "SBU": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "__metadata",
+                          "SBG",
+                          "SBU"
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "Apply_to_each": {
+          "foreach": "@body('Parse_JSON')?['d']?['results']",
+          "actions": {
+            "Update_item": {
+              "runAfter": {},
+              "metadata": {
+                "operationMetadataId": "8f7ae4f6-1a68-4d9d-b864-566b1097b174",
+                "flowSystemMetadata": {
+                  "swaggerOperationId": "PatchItem"
+                }
+              },
+              "type": "ApiConnection",
+              "inputs": {
+                "host": {
+                  "connection": {
+                    "name": "@parameters('$connections')['shared_sharepointonline_1']['connectionId']"
+                  }
+                },
+                "method": "patch",
+                "body": {
+                  "IdeaTitle": "@triggerBody()?['IdeaTitle']",
+                  "Description": "@triggerBody()?['Description']",
+                  "EID_x002f_HID": "@triggerBody()?['EID_x002f_HID']",
+                  "NumberOfLikes": 0,
+                  "Status": {
+                    "Value": "New"
+                  },
+                  "Category": {
+                    "Value": "Select Idea Category"
+                  },
+                  "Yammer_x0020_Post": false,
+                  "Sheila_x0027_s_x0020_Blog_x003f_": false,
+                  "BB_x0020_Newsletter_x003f_": false,
+                  "SBG": "@items('Apply_to_each')?['SBG']",
+                  "SBU": "@items('Apply_to_each')?['SBU']",
+                  "Do_x0020_you_x0020_want_x0020_to": false
+                },
+                "path": "/datasets/@{encodeURIComponent(encodeURIComponent('https://honeywellprod.sharepoint.com/teams/SumiTestBOTUI'))}/tables/@{encodeURIComponent(encodeURIComponent('f4768511-6131-46a5-84a7-04cc17d43241'))}/items/@{encodeURIComponent(triggerBody()?['ID'])}",
+                "authentication": "@parameters('$authentication')"
+              }
+            }
+          },
+          "runAfter": {
+            "Parse_JSON": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "1855a820-5ab3-4e0e-980a-30edeb5904bc"
+          },
+          "type": "Foreach"
+        }
+      }
+    }
+  },
+  "schemaVersion": "1.0.0.0"
+}
